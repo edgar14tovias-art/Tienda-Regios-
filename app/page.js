@@ -1,28 +1,23 @@
 "use client";
 import { useState } from "react";
-import { PRODUCTS, generateDeliveryInfo } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
 import { theme } from "@/lib/theme";
+import { useCart } from "@/lib/cartStore";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Filters from "@/components/Filters";
 import ProductCard from "@/components/ProductCard";
-import PurchaseModal from "@/components/PurchaseModal";
 
 export default function Home() {
   const [filter, setFilter] = useState("all");
-  const [purchasedItem, setPurchasedItem] = useState(null);
+  const addItem = useCart((s) => s.addItem);
 
   const filtered =
     filter === "all" ? PRODUCTS : PRODUCTS.filter((item) => item.type === filter);
 
-  const handleComprar = (prod) => {
-    const delivery = generateDeliveryInfo(prod);
-    setPurchasedItem({
-      title: prod.name,
-      label: delivery.label,
-      tipo: delivery.tipo,
-      info: delivery.info,
-    });
+  const handleAdd = (prod) => {
+    addItem(prod);
+    alert(`"${prod.name}" agregado al carrito 🛒`);
   };
 
   return (
@@ -74,11 +69,9 @@ export default function Home() {
         }}
       >
         {filtered.map((prod) => (
-          <ProductCard key={prod.id} prod={prod} onBuy={handleComprar} />
+          <ProductCard key={prod.id} prod={prod} onBuy={handleAdd} />
         ))}
-
-        <PurchaseModal item={purchasedItem} onClose={() => setPurchasedItem(null)} />
       </div>
     </div>
   );
-          }
+}
