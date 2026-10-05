@@ -1,100 +1,94 @@
 'use client';
 import { useState } from 'react';
-
-// CATÁLOGO DE PRODUCTOS Y SERVICIOS
-const PRODUCTS = [
-  {
-    id: "stream-1",
-    name: "Pantalla Streaming 4K (30 Días)",
-    description: "Cuenta con perfil privado y PIN exclusivo. Entrega automática.",
-    price: 95,
-    type: "digital",
-    badge: "⚡ Entrega Inmediata"
-  },
-  {
-    id: "stream-2",
-    name: "Combo Streaming Familiar (1 Mes)",
-    description: "Acceso multi-pantalla garantizado todo el mes.",
-    price: 180,
-    type: "digital",
-    badge: "⚡ Automático"
-  },
-  {
-    id: "fisico-1",
-    name: "Filtro de Aceite Sintético de Alto Rendimiento",
-    description: "Repuesto automotriz de larga duración. Envío por paquetería.",
-    price: 280,
-    type: "physical",
-    badge: "📦 Envío a Domicilio"
-  },
-  {
-    id: "serv-1",
-    name: "Asesoría Técnica y Diagnóstico Remoto",
-    description: "Sesión 1 a 1 de 45 minutos para soporte o configuración.",
-    price: 350,
-    type: "service",
-    badge: "📅 Cita Online"
-  }
-];
+import { PRODUCTS, generateDeliveryInfo } from '@/lib/products';
+import { theme } from '@/lib/theme';
 
 export default function Home() {
   const [filter, setFilter] = useState('all');
   const [purchasedItem, setPurchasedItem] = useState(null);
 
-  const filtered = filter === 'all' 
-    ? PRODUCTS 
-    : PRODUCTS.filter(item => item.type === filter);
+  const filtered =
+    filter === 'all' ? PRODUCTS : PRODUCTS.filter((item) => item.type === filter);
 
   const handleComprar = (prod) => {
-    if (prod.type === 'digital') {
-      setPurchasedItem({
-        title: prod.name,
-        tipo: 'digital',
-        info: 'usuario_demo@stream.com:ClaveSegura2026 (PIN: 1409)'
-      });
-    } else if (prod.type === 'physical') {
-      setPurchasedItem({
-        title: prod.name,
-        tipo: 'physical',
-        info: 'Guía de rastreo generada: ENV-MX-8829103'
-      });
-    } else {
-      setPurchasedItem({
-        title: prod.name,
-        tipo: 'service',
-        info: 'Enlace de videollamada y agenda asignado.'
-      });
-    }
+    const delivery = generateDeliveryInfo(prod);
+    setPurchasedItem({
+      title: prod.name,
+      label: delivery.label,
+      tipo: delivery.tipo,
+      info: delivery.info,
+    });
   };
 
   return (
-    <div style={{ backgroundColor: '#070b08', color: '#fff', minHeight: '100vh', fontFamily: 'sans-serif', paddingBottom: '80px' }}>
-      
-      {/* Banner Superior */}
-      <div style={{ backgroundColor: '#10b981', color: '#000', padding: '8px', textAlign: 'center', fontSize: '12px', fontWeight: 'bold' }}>
+    <div
+      style={{
+        backgroundColor: theme.bg,
+        color: '#fff',
+        minHeight: '100vh',
+        fontFamily: 'sans-serif',
+        paddingBottom: '80px',
+      }}
+    >
+      {/* Banner */}
+      <div
+        style={{
+          backgroundColor: theme.green,
+          color: theme.black,
+          padding: '8px',
+          textAlign: 'center',
+          fontSize: '12px',
+          fontWeight: 'bold',
+        }}
+      >
         Soporte oficial por WhatsApp & Telegram
       </div>
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid #1a241e' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '16px 20px',
+          borderBottom: `1px solid ${theme.border}`,
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
-          <span style={{ color: '#10b981', fontSize: '18px' }}>⚡</span> TIENDA REGIOS
+          <span style={{ color: theme.green, fontSize: '18px' }}>⚡</span> TIENDA REGIOS
         </div>
-        <span style={{ fontSize: '11px', background: '#0f1712', border: '1px solid #10b98140', color: '#10b981', padding: '4px 8px', borderRadius: '6px' }}>
+        <span
+          style={{
+            fontSize: '11px',
+            background: theme.bgCard,
+            border: `1px solid ${theme.green}40`,
+            color: theme.green,
+            padding: '4px 8px',
+            borderRadius: '6px',
+          }}
+        >
           MXN
         </span>
       </div>
 
-      {/* Hero Principal */}
+      {/* Hero */}
       <div style={{ textAlign: 'center', padding: '32px 20px 16px' }}>
-        <h1 style={{ fontSize: '36px', fontWeight: '900', lineHeight: '1.1', margin: '0', letterSpacing: '-0.5px' }}>
-          Tienda <span style={{ color: '#10b981' }}>Regios</span>
+        <h1
+          style={{
+            fontSize: '36px',
+            fontWeight: '900',
+            lineHeight: '1.1',
+            margin: '0',
+            letterSpacing: '-0.5px',
+            color: theme.textMain,
+          }}
+        >
+          Tienda <span style={{ color: theme.green }}>Regios</span>
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '10px', fontWeight: '500' }}>
+        <p style={{ color: theme.textSub, fontSize: '14px', marginTop: '10px', fontWeight: '500' }}>
           Venta de productos y servicios
         </p>
 
-        {/* BOTÓN DESTACADO: VENTA DE LLANTAS */}
         <div style={{ marginTop: '22px', display: 'flex', justifyContent: 'center' }}>
           <a
             href="https://comprarllantas.mx/llantas-regios"
@@ -105,7 +99,7 @@ export default function Home() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              backgroundColor: '#10b981',
+              backgroundColor: theme.green,
               color: '#05130b',
               fontWeight: '900',
               fontSize: '14px',
@@ -113,9 +107,9 @@ export default function Home() {
               borderRadius: '16px',
               textDecoration: 'none',
               boxShadow: '0 0 22px rgba(16, 185, 129, 0.35)',
-              border: '1px solid #34d399',
+              border: `1px solid ${theme.greenLight}`,
               width: '92%',
-              maxWidth: '380px'
+              maxWidth: '380px',
             }}
           >
             <span style={{ fontSize: '17px' }}>🛞</span> Venta de llantas - Cotiza aquí <span>→</span>
@@ -123,21 +117,45 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Título del Menú / Catálogo */}
+      {/* Título catálogo */}
       <div style={{ textAlign: 'center', marginTop: '18px', marginBottom: '12px' }}>
-        <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#e2e8f0', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <h2
+          style={{
+            fontSize: '16px',
+            fontWeight: '800',
+            color: '#e2e8f0',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+          }}
+        >
           Explora nuestro catálogo
         </h2>
-        <div style={{ width: '40px', height: '2px', backgroundColor: '#10b981', margin: '6px auto 0', borderRadius: '2px' }}></div>
+        <div
+          style={{
+            width: '40px',
+            height: '2px',
+            backgroundColor: theme.green,
+            margin: '6px auto 0',
+            borderRadius: '2px',
+          }}
+        />
       </div>
 
-      {/* Filtros por Categoría */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', padding: '10px 16px 20px', flexWrap: 'wrap' }}>
+      {/* Filtros */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '8px',
+          padding: '10px 16px 20px',
+          flexWrap: 'wrap',
+        }}
+      >
         {[
           { id: 'all', label: 'Todos' },
           { id: 'digital', label: 'Digitales' },
           { id: 'physical', label: 'Físicos' },
-          { id: 'service', label: 'Servicios' }
+          { id: 'service', label: 'Servicios' },
         ].map((btn) => (
           <button
             key={btn.id}
@@ -147,10 +165,13 @@ export default function Home() {
               borderRadius: '12px',
               fontSize: '12px',
               fontWeight: 'bold',
-              border: filter === btn.id ? '1px solid #10b981' : '1px solid #1f2b23',
-              backgroundColor: filter === btn.id ? '#10b981' : '#0e1411',
-              color: filter === btn.id ? '#000' : '#88998f',
-              cursor: 'pointer'
+              border:
+                filter === btn.id
+                  ? `1px solid ${theme.green}`
+                  : `1px solid ${theme.borderSoft}`,
+              backgroundColor: filter === btn.id ? theme.green : theme.bgCard,
+              color: filter === btn.id ? theme.black : '#88998f',
+              cursor: 'pointer',
             }}
           >
             {btn.label}
@@ -158,24 +179,78 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Lista de Productos */}
-      <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '500px', margin: '0 auto' }}>
+      {/* Productos */}
+      <div
+        style={{
+          padding: '0 16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '14px',
+          maxWidth: '500px',
+          margin: '0 auto',
+        }}
+      >
         {filtered.map((prod) => (
-          <div key={prod.id} style={{ backgroundColor: '#0e1411', border: '1px solid #1a261f', borderRadius: '16px', padding: '18px' }}>
-            <span style={{ fontSize: '10px', background: '#10b98115', color: '#10b981', padding: '3px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
+          <div
+            key={prod.id}
+            style={{
+              backgroundColor: theme.bgCard,
+              border: `1px solid ${theme.border}`,
+              borderRadius: '16px',
+              padding: '18px',
+            }}
+          >
+            <span
+              style={{
+                fontSize: '10px',
+                background: theme.bgBadge,
+                color: theme.green,
+                padding: '3px 8px',
+                borderRadius: '6px',
+                fontWeight: 'bold',
+              }}
+            >
               {prod.badge}
             </span>
-            <h3 style={{ fontSize: '17px', fontWeight: 'bold', margin: '10px 0 4px', color: '#f8fafc' }}>{prod.name}</h3>
-            <p style={{ color: '#7a8c82', fontSize: '12px', margin: '0 0 14px' }}>{prod.description}</p>
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3
+              style={{
+                fontSize: '17px',
+                fontWeight: 'bold',
+                margin: '10px 0 4px',
+                color: theme.textMain,
+              }}
+            >
+              {prod.name}
+            </h3>
+            <p style={{ color: theme.textMuted, fontSize: '12px', margin: '0 0 14px' }}>
+              {prod.description}
+            </p>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <div>
-                <span style={{ fontSize: '11px', color: '#66776d' }}>Precio</span>
-                <div style={{ fontSize: '20px', fontWeight: '900', color: '#fff' }}>${prod.price} MXN</div>
+                <span style={{ fontSize: '11px', color: theme.textDim }}>Precio</span>
+                <div style={{ fontSize: '20px', fontWeight: '900', color: '#fff' }}>
+                  ${prod.price} MXN
+                </div>
               </div>
-              <button 
+              <button
                 onClick={() => handleComprar(prod)}
-                style={{ backgroundColor: '#10b981', color: '#000', border: 'none', padding: '10px 18px', borderRadius: '12px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
+                style={{
+                  backgroundColor: theme.green,
+                  color: theme.black,
+                  border: 'none',
+                  padding: '10px 18px',
+                  borderRadius: '12px',
+                  fontWeight: 'bold',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                }}
               >
                 Comprar
               </button>
@@ -183,21 +258,49 @@ export default function Home() {
           </div>
         ))}
 
-        {/* Modal / Caja de entrega simulada */}
+        {/* Modal compra */}
         {purchasedItem && (
-          <div style={{ backgroundColor: '#111e16', border: '1px solid #10b981', borderRadius: '16px', padding: '16px', marginTop: '12px' }}>
-            <div style={{ fontSize: '13px', color: '#10b981', fontWeight: 'bold' }}>✓ ¡Orden confirmada!</div>
-            <div style={{ fontSize: '12px', color: '#fff', fontWeight: 'bold', marginTop: '4px' }}>{purchasedItem.title}</div>
+          <div
+            style={{
+              backgroundColor: theme.bgSoft,
+              border: `1px solid ${theme.green}`,
+              borderRadius: '16px',
+              padding: '16px',
+              marginTop: '12px',
+            }}
+          >
+            <div style={{ fontSize: '13px', color: theme.green, fontWeight: 'bold' }}>
+              ✓ ¡Orden confirmada!
+            </div>
+            <div
+              style={{
+                fontSize: '12px',
+                color: '#fff',
+                fontWeight: 'bold',
+                marginTop: '4px',
+              }}
+            >
+              {purchasedItem.title}
+            </div>
             <p style={{ fontSize: '11px', color: '#a0b0a6', margin: '6px 0 4px' }}>
-              {purchasedItem.tipo === 'digital' ? 'Tus accesos generados:' : 'Detalles de la compra:'}
+              {purchasedItem.label}
             </p>
-            <div style={{ background: '#000', padding: '10px', borderRadius: '8px', fontFamily: 'monospace', fontSize: '12px', color: '#34d399', wordBreak: 'break-all' }}>
+            <div
+              style={{
+                background: '#000',
+                padding: '10px',
+                borderRadius: '8px',
+                fontFamily: 'monospace',
+                fontSize: '12px',
+                color: theme.greenLight,
+                wordBreak: 'break-all',
+              }}
+            >
               {purchasedItem.info}
             </div>
           </div>
         )}
       </div>
-
     </div>
   );
-}
+          }
