@@ -1,6 +1,11 @@
+"use client";
+import Link from "next/link";
 import { theme } from "@/lib/theme";
+import { useCart } from "@/lib/cartStore";
 
 export default function Header() {
+  const count = useCart((s) => s.items.reduce((sum, i) => sum + i.qty, 0));
+
   return (
     <>
       <div
@@ -25,22 +30,66 @@ export default function Header() {
           borderBottom: `1px solid ${theme.border}`,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: "bold" }}>
-          <span style={{ color: theme.green, fontSize: "18px" }}>⚡</span> TIENDA REGIOS
-        </div>
-        <span
+        <Link
+          href="/"
           style={{
-            fontSize: "11px",
-            background: theme.bgCard,
-            border: `1px solid ${theme.green}40`,
-            color: theme.green,
-            padding: "4px 8px",
-            borderRadius: "6px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            fontWeight: "bold",
+            color: "#fff",
+            textDecoration: "none",
           }}
         >
-          MXN
-        </span>
+          <span style={{ color: theme.green, fontSize: "18px" }}>⚡</span> TIENDA REGIOS
+        </Link>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <Link
+            href="/carrito"
+            style={{
+              position: "relative",
+              textDecoration: "none",
+              fontSize: "20px",
+              color: theme.green,
+            }}
+          >
+            🛒
+            {count > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-6px",
+                  right: "-10px",
+                  background: theme.green,
+                  color: theme.black,
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  padding: "2px 6px",
+                  borderRadius: "10px",
+                  minWidth: "16px",
+                  textAlign: "center",
+                }}
+              >
+                {count}
+              </span>
+            )}
+          </Link>
+
+          <span
+            style={{
+              fontSize: "11px",
+              background: theme.bgCard,
+              border: `1px solid ${theme.green}40`,
+              color: theme.green,
+              padding: "4px 8px",
+              borderRadius: "6px",
+            }}
+          >
+            MXN
+          </span>
+        </div>
       </div>
     </>
   );
-          }
+}
