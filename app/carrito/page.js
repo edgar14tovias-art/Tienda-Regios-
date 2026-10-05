@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import { theme } from "@/lib/theme";
 import { useCart } from "@/lib/cartStore";
 import Header from "@/components/Header";
@@ -9,8 +10,31 @@ export default function CarritoPage() {
   const updateQty = useCart((s) => s.updateQty);
   const removeItem = useCart((s) => s.removeItem);
   const clear = useCart((s) => s.clear);
+  const [loading, setLoading] = useState(false);
 
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+  const handlePagar = async () => {
+    if (items.length === 0) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Error: " + (data.error || "No se pudo crear la sesión"));
+        setLoading(false);
+      }
+    } catch (err) {
+      alert("Error de conexión. Intenta de nuevo.");
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -190,20 +214,21 @@ export default function CarritoPage() {
                 </span>
               </div>
               <button
+                onClick={handlePagar}
+                disabled={loading}
                 style={{
                   width: "100%",
-                  background: theme.green,
-                  color: theme.black,
+                  background: loading ? "#64748b" : theme.green,
+                  color: loading ? "#94a3b8" : theme.black,
                   border: "none",
                   padding: "14px",
                   borderRadius: "12px",
                   fontWeight: "900",
                   fontSize: "14px",
-                  cursor: "pointer",
+                  cursor: loading ? "not-allowed" : "pointer",
                 }}
-                onClick={() => alert("Aquí irá Stripe en el siguiente paso")}
               >
-                Pagar con tarjeta
+                {loading ? "Redirigiendo a Stripe..." : "Pagar con tarjeta"}
               </button>
             </div>
           </>
@@ -211,4 +236,4 @@ export default function CarritoPage() {
       </div>
     </div>
   );
-                   }
+}
