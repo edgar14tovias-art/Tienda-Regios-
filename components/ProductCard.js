@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { theme } from "@/lib/theme";
 
 export default function ProductCard({ prod, onBuy }) {
@@ -10,31 +11,36 @@ export default function ProductCard({ prod, onBuy }) {
         padding: "18px",
       }}
     >
-      <span
-        style={{
-          fontSize: "10px",
-          background: theme.bgBadge,
-          color: theme.green,
-          padding: "3px 8px",
-          borderRadius: "6px",
-          fontWeight: "bold",
-        }}
+      <Link
+        href={`/productos/${prod.slug}`}
+        style={{ textDecoration: "none", color: "inherit" }}
       >
-        {prod.badge}
-      </span>
-      <h3
-        style={{
-          fontSize: "17px",
-          fontWeight: "bold",
-          margin: "10px 0 4px",
-          color: theme.textMain,
-        }}
-      >
-        {prod.name}
-      </h3>
-      <p style={{ color: theme.textMuted, fontSize: "12px", margin: "0 0 14px" }}>
-        {prod.description}
-      </p>
+        <span
+          style={{
+            fontSize: "10px",
+            background: theme.bgBadge,
+            color: theme.green,
+            padding: "3px 8px",
+            borderRadius: "6px",
+            fontWeight: "bold",
+          }}
+        >
+          {prod.badge}
+        </span>
+        <h3
+          style={{
+            fontSize: "17px",
+            fontWeight: "bold",
+            margin: "10px 0 4px",
+            color: theme.textMain,
+          }}
+        >
+          {prod.name}
+        </h3>
+        <p style={{ color: theme.textMuted, fontSize: "12px", margin: "0 0 14px" }}>
+          {prod.description}
+        </p>
+      </Link>
 
       <div
         style={{
@@ -62,9 +68,9 @@ export default function ProductCard({ prod, onBuy }) {
             cursor: "pointer",
           }}
         >
-          Comprar
+          Agregar
         </button>
       </div>
     </div>
   );
-          }
+}
