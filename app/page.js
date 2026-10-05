@@ -1,6 +1,41 @@
 'use client';
 import { useState } from 'react';
-import { PRODUCTS } from '../data/products';
+
+// LISTA DE PRODUCTOS Y SERVICIOS DIRECTA
+const PRODUCTS = [
+  {
+    id: "stream-1",
+    name: "Pantalla Streaming 4K (30 Días)",
+    description: "Cuenta con perfil privado y PIN exclusivo. Entrega automática.",
+    price: 95,
+    type: "digital",
+    badge: "⚡ Entrega Inmediata"
+  },
+  {
+    id: "stream-2",
+    name: "Combo Streaming Familiar (1 Mes)",
+    description: "Acceso multi-pantalla garantizado todo el mes.",
+    price: 180,
+    type: "digital",
+    badge: "⚡ Automático"
+  },
+  {
+    id: "fisico-1",
+    name: "Filtro de Aceite Sintético de Alto Rendimiento",
+    description: "Repuesto automotriz de larga duración. Envío por paquetería.",
+    price: 280,
+    type: "physical",
+    badge: "📦 Envío a Domicilio"
+  },
+  {
+    id: "serv-1",
+    name: "Asesoría Técnica y Diagnóstico Remoto",
+    description: "Sesión 1 a 1 de 45 minutos para soporte o configuración.",
+    price: 350,
+    type: "service",
+    badge: "📅 Cita Online"
+  }
+];
 
 export default function Home() {
   const [filter, setFilter] = useState('all');
@@ -43,7 +78,7 @@ export default function Home() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid #1a241e' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
-          <span style={{ color: '#10b981', fontSize: '18px' }}>⚡</span> MI TIENDA
+          <span style={{ color: '#10b981', fontSize: '18px' }}>⚡</span> TIENDA REGIOS
         </div>
         <span style={{ fontSize: '11px', background: '#0f1712', border: '1px solid #10b98140', color: '#10b981', padding: '4px 8px', borderRadius: '6px' }}>
           MXN
@@ -157,4 +192,5 @@ export default function Home() {
 
     </div>
   );
-}
+    }
+    
