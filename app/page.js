@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-// LISTA DE PRODUCTOS Y SERVICIOS DIRECTA
+// CATÁLOGO DE PRODUCTOS Y SERVICIOS
 const PRODUCTS = [
   {
     id: "stream-1",
@@ -85,17 +85,17 @@ export default function Home() {
         </span>
       </div>
 
-      {/* Hero */}
-      <div style={{ textAlign: 'center', padding: '28px 20px 16px' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: '900', lineHeight: '1.2', margin: '0' }}>
-          Digital y Servicios,<br/><span style={{ color: '#10b981' }}>al instante.</span>
+      {/* Hero Principal */}
+      <div style={{ textAlign: 'center', padding: '32px 20px 16px' }}>
+        <h1 style={{ fontSize: '36px', fontWeight: '900', lineHeight: '1.1', margin: '0', letterSpacing: '-0.5px' }}>
+          Tienda <span style={{ color: '#10b981' }}>Regios</span>
         </h1>
-        <p style={{ color: '#88998f', fontSize: '13px', marginTop: '8px' }}>
-          Catálogo con entregas inmediatas y pagos protegidos.
+        <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '10px', fontWeight: '500' }}>
+          Venta de productos y servicios
         </p>
 
         {/* BOTÓN DESTACADO: VENTA DE LLANTAS */}
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ marginTop: '22px', display: 'flex', justifyContent: 'center' }}>
           <a
             href="https://comprarllantas.mx/llantas-regios"
             target="_blank"
@@ -109,18 +109,26 @@ export default function Home() {
               color: '#05130b',
               fontWeight: '900',
               fontSize: '14px',
-              padding: '14px 24px',
+              padding: '14px 22px',
               borderRadius: '16px',
               textDecoration: 'none',
-              boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)',
+              boxShadow: '0 0 22px rgba(16, 185, 129, 0.35)',
               border: '1px solid #34d399',
-              width: '90%',
+              width: '92%',
               maxWidth: '380px'
             }}
           >
-            <span style={{ fontSize: '16px' }}>🛞</span> Venta de llantas - Cotiza aquí <span>→</span>
+            <span style={{ fontSize: '17px' }}>🛞</span> Venta de llantas - Cotiza aquí <span>→</span>
           </a>
         </div>
+      </div>
+
+      {/* Título del Menú / Catálogo */}
+      <div style={{ textAlign: 'center', marginTop: '18px', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#e2e8f0', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          Explora nuestro catálogo
+        </h2>
+        <div style={{ width: '40px', height: '2px', backgroundColor: '#10b981', margin: '6px auto 0', borderRadius: '2px' }}></div>
       </div>
 
       {/* Filtros por Categoría */}
@@ -135,8 +143,8 @@ export default function Home() {
             key={btn.id}
             onClick={() => setFilter(btn.id)}
             style={{
-              padding: '6px 14px',
-              borderRadius: '10px',
+              padding: '7px 15px',
+              borderRadius: '12px',
               fontSize: '12px',
               fontWeight: 'bold',
               border: filter === btn.id ? '1px solid #10b981' : '1px solid #1f2b23',
@@ -157,7 +165,7 @@ export default function Home() {
             <span style={{ fontSize: '10px', background: '#10b98115', color: '#10b981', padding: '3px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
               {prod.badge}
             </span>
-            <h2 style={{ fontSize: '17px', fontWeight: 'bold', margin: '10px 0 4px' }}>{prod.name}</h2>
+            <h3 style={{ fontSize: '17px', fontWeight: 'bold', margin: '10px 0 4px', color: '#f8fafc' }}>{prod.name}</h3>
             <p style={{ color: '#7a8c82', fontSize: '12px', margin: '0 0 14px' }}>{prod.description}</p>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -192,5 +200,4 @@ export default function Home() {
 
     </div>
   );
-    }
-    
+}
